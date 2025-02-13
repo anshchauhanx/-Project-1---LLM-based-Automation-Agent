@@ -137,12 +137,4 @@ Developed for IITM TDS Project
 Uses AI Proxy API by Sanand
 Built with FastAPI & Python
 
-🚀 Ready to Automate Tasks? Let's Go!
-
-
-✅ **Modify the `AIPROXY_TOKEN` section before publishing**  
-✅ **Push the project to GitHub using**:
-```sh
-git add README.md
-git commit -m "Added project documentation"
-git push origin main
+🚀 Ready to Automate Tasks? Let's Go!!
