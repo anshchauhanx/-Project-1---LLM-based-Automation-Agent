@@ -94,16 +94,19 @@ llm-automation-agent/
 │── Dockerfile           # Docker container setup
 │── .env                 # API keys & configurations
 │── README.md            # Project documentation
+
 ⚙️ Configuration & Settings
 The IITM Proxy API is used instead of OpenAI.
 Modify .env file to configure API tokens.
 Data files are stored in /data/ directory.
 All outputs are written to /data/output/.
+
 🛠️ Troubleshooting
 🔴 Website Not Loading
 Ensure FastAPI is running (uvicorn app.main:app --reload)
 Try running on a different port (--port 8080)
 Check for firewall or VPN restrictions
+
 🔴 API Returning 400 Bad Request
 Ensure IITM Proxy API Token is correct (.env file)
 Test API manually:
@@ -112,10 +115,12 @@ Copy
 Edit
 Invoke-RestMethod -Uri "https://aiproxy.sanand.workers.dev/openai/v1/chat/completions" -Method Post
 Check FastAPI logs for errors (uvicorn app.main:app --log-level debug)
+
 🎯 Future Improvements
 ✅ Implement SQLite/DuckDB Support for database tasks
 ✅ Add advanced error handling
 ✅ Improve LLM task execution logic
+
 🤝 Contributing
 Fork the repository
 Create a feature branch:
@@ -125,23 +130,16 @@ Edit
 git checkout -b feature-new-task
 Commit changes & push to GitHub
 Submit a Pull Request (PR)
-📜 License
-This project is open-source under the MIT License.
+
 
 🌟 Acknowledgments
 Developed for IITM TDS Project
 Uses AI Proxy API by Sanand
 Built with FastAPI & Python
+
 🚀 Ready to Automate Tasks? Let's Go!
 
-yaml
-Copy
-Edit
 
----
-
-### **🚀 Next Steps**
-✅ **Save this as `README.md` in your GitHub repo**  
 ✅ **Modify the `AIPROXY_TOKEN` section before publishing**  
 ✅ **Push the project to GitHub using**:
 ```sh
