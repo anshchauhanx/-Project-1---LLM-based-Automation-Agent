@@ -1,12 +1,15 @@
-FROM python:3.8
+FROM python:3.11
 
 WORKDIR /app
 
-COPY . .
+COPY requirements.txt /app/
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-ENV LLM_API_KEY=${LLM_API_KEY}
+COPY . /app
+
+# Copy .env file into the container
+COPY .env /app/
 
 EXPOSE 8000
 

@@ -2,19 +2,21 @@ import os
 import json
 import requests
 import sqlite3
-from app.llm import parse_task  # Import LLM for processing
+from app.llm import parse_task
 
 def execute_task(task):
     """Determines and executes the appropriate task."""
-    if "count Wednesdays" in task:
+    structured_task = parse_task(task).lower()
+
+    if "count wednesdays" in structured_task:
         return count_wednesdays("data/dates.txt")
-    elif "sort contacts" in task:
+    elif "sort contacts" in structured_task:
         return sort_contacts("data/contacts.json")
-    elif "extract email" in task:
+    elif "extract email" in structured_task:
         return extract_email("data/email.txt")
-    elif "fetch API data" in task:
+    elif "fetch api data" in structured_task:
         return fetch_api_data()
-    elif "calculate gold ticket sales" in task:
+    elif "calculate gold ticket sales" in structured_task:
         return calculate_gold_ticket_sales("data/ticket-sales.db")
     else:
         raise ValueError("Task not recognized")
@@ -29,10 +31,7 @@ def count_wednesdays(file_path):
 
     count = sum(1 for date in dates if "Wednesday" in date)
 
-    # Ensure data directory exists
     os.makedirs("data", exist_ok=True)
-
-    # Write result to file
     output_path = "data/dates-wednesdays.txt"
     with open(output_path, "w") as output_file:
         output_file.write(str(count))
@@ -74,7 +73,7 @@ def calculate_gold_ticket_sales(db_path):
     cursor = conn.cursor()
 
     cursor.execute("SELECT SUM(units * price) FROM tickets WHERE type = 'Gold'")
-    total_sales = cursor.fetchone()[0]
+    total_sales = cursor.fetchone()[0] or 0  # Handle None case
 
     conn.close()
 
