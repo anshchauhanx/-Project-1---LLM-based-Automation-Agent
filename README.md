@@ -1,140 +1,101 @@
-# 🚀 LLM-Based Automation Agent
+# LLM-based Automation Agent
 
-## 📌 Overview
-This project is an **LLM-powered automation agent** designed for **DataWorks Solutions**. It processes large volumes of logs, reports, and code artifacts and integrates with a **Continuous Integration (CI) pipeline**. The agent can interpret **plain-English tasks**, process data, and generate verifiable outputs.
+## 🚀 Project Overview
+This project is an **LLM-based Automation Agent** that can execute various operational and business tasks using a **FastAPI**-based REST API. The agent takes plain-English tasks, processes them using an **LLM (via IITM Proxy API)**, and performs multi-step automation.
 
-## 🛠️ Features
-- ✅ **Task Execution via LLM**: Accepts plain-text instructions and executes tasks.
-- ✅ **File Reading API**: Returns file contents for verification.
-- ✅ **Operations Automation**: Handles tasks like formatting files, counting specific dates, and sorting JSON data.
-- ✅ **Secure Data Handling**: Prevents unauthorized access and deletion.
-- ✅ **Business Task Execution**: Fetch data from APIs, run SQL queries, transcribe audio, etc.
-- ✅ **Docker Support**: Run the application in a **Docker container**.
-- ✅ **IITM Proxy API Integration**: Uses **IITM's AI Proxy** for LLM-based processing.
+## 📌 Features
+- ✅ **Execute English-language tasks** using `/run?task=...`
+- ✅ **Read output files** using `/read?path=...`
+- ✅ **Supports various automation tasks** (file operations, API requests, database queries, and more)
+- ✅ **Runs inside a Docker container** and can be deployed with **Podman**
+
+## 🛠️ Tech Stack
+- **Python 3.11**
+- **FastAPI** (REST API framework)
+- **SQLite3** (Database operations)
+- **OpenAI API via IITM Proxy** (for task processing)
+- **Docker & Podman** (for containerization)
 
 ---
 
-## 🚀 Quick Start Guide
-
-### 1️⃣ **Clone the Repository**
-```sh
-git clone https://github.com/your-github-username/llm-automation-agent.git
-cd llm-automation-agent
-2️⃣ Install Dependencies
-Ensure you have Python 3.10+ installed, then run:
-
-sh
-Copy
-Edit
-pip install -r requirements.txt
-3️⃣ Set Up Environment Variables
-Create a .env file in the root directory:
-
-ini
-Copy
-Edit
-AIPROXY_TOKEN=your_actual_proxy_token_here
-4️⃣ Run the FastAPI Server
-sh
-Copy
-Edit
-uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
-✅ Server Running at: http://127.0.0.1:8000
-
-📡 API Endpoints
-1️⃣ Execute a Task
-Endpoint: POST /run?task=<task description>
-Example Request:
-sh
-Copy
-Edit
-Invoke-RestMethod -Uri "http://127.0.0.1:8000/run?task=count%20Wednesdays%20in%20/data/dates.txt" -Method Post
-Example Response:
-json
-Copy
-Edit
-{"message": "Task executed successfully", "output": "Wednesdays count: 3"}
-2️⃣ Read a File
-Endpoint: GET /read?path=<file path>
-Example Request:
-sh
-Copy
-Edit
-Invoke-RestMethod -Uri "http://127.0.0.1:8000/read?path=/data/dates-wednesdays.txt" -Method Get
-Example Response:
-json
-Copy
-Edit
-{"content": "3"}
-🐳 Running with Docker
-1️⃣ Build the Docker Image
-sh
-Copy
-Edit
-docker build -t llm-agent .
-2️⃣ Run the Docker Container
-sh
-Copy
-Edit
-docker run -p 8000:8000 llm-agent
-✅ Now, access the API at: http://127.0.0.1:8000
-
-🏗️ Project Structure
-bash
-Copy
-Edit
+## 📂 Project Structure
+```
 llm-automation-agent/
-│── app/
-│   ├── main.py          # FastAPI entry point
-│   ├── tasks.py         # Task execution logic
-│   ├── llm.py           # LLM processing (IITM Proxy API)
-│   ├── utils.py         # Utility functions
-│── data/                # Task-related input/output files
-│── requirements.txt     # Python dependencies
-│── Dockerfile           # Docker container setup
-│── .env                 # API keys & configurations
-│── README.md            # Project documentation
+│-- app/
+│   ├── main.py       # FastAPI entry point
+│   ├── tasks.py      # Handles task execution
+│   ├── llm.py        # Communicates with IITM Proxy API
+│-- data/             # Folder for generated output files
+│-- create_db.py      # Script to initialize SQLite database
+│-- Dockerfile        # Container setup
+│-- .env              # API key configuration
+│-- requirements.txt  # Python dependencies
+│-- README.md         # Project documentation
+```
 
-⚙️ Configuration & Settings
-The IITM Proxy API is used instead of OpenAI.
-Modify .env file to configure API tokens.
-Data files are stored in /data/ directory.
-All outputs are written to /data/output/.
+---
 
-🛠️ Troubleshooting
-🔴 Website Not Loading
-Ensure FastAPI is running (uvicorn app.main:app --reload)
-Try running on a different port (--port 8080)
-Check for firewall or VPN restrictions
+## 🚀 Getting Started
 
-🔴 API Returning 400 Bad Request
-Ensure IITM Proxy API Token is correct (.env file)
-Test API manually:
-sh
-Copy
-Edit
-Invoke-RestMethod -Uri "https://aiproxy.sanand.workers.dev/openai/v1/chat/completions" -Method Post
-Check FastAPI logs for errors (uvicorn app.main:app --log-level debug)
+### 1️⃣ Clone the Repository
+```sh
+git clone https://github.com/anshchauhanx/-Project-1---LLM-based-Automation-Agent.git
+cd llm-automation-agent
+```
 
-🎯 Future Improvements
-✅ Implement SQLite/DuckDB Support for database tasks
-✅ Add advanced error handling
-✅ Improve LLM task execution logic
+### 2️⃣ Install Dependencies
+```sh
+pip install -r requirements.txt
+```
 
-🤝 Contributing
-Fork the repository
-Create a feature branch:
-sh
-Copy
-Edit
-git checkout -b feature-new-task
-Commit changes & push to GitHub
-Submit a Pull Request (PR)
+### 3️⃣ Set Up Environment Variables
+Create a `.env` file and add your **IITM Proxy API key**:
+```
+AIPROXY_TOKEN=your_iitm_proxy_api_key
+```
 
+### 4️⃣ Run the FastAPI Server
+```sh
+uvicorn app.main:app --reload
+```
+✅ API will be available at: **http://127.0.0.1:8000**
 
-🌟 Acknowledgments
-Developed for IITM TDS Project
-Uses AI Proxy API by Sanand
-Built with FastAPI & Python
+### 5️⃣ Test API Endpoints
+#### **Run a Task**
+```powershell
+Invoke-RestMethod -Uri "http://127.0.0.1:8000/run?task=count%20Wednesdays%20in%20/data/dates.txt" -Method Post
+```
+#### **Read a File**
+```powershell
+Invoke-RestMethod -Uri "http://127.0.0.1:8000/read?path=/data/dates-wednesdays.txt" -Method Get
+```
 
-🚀 Ready to Automate Tasks? Let's Go!!
+---
+
+## 🐳 Docker Deployment
+### 1️⃣ Build the Docker Image
+```sh
+docker build -t anshchauhanx/llm-automation-agent .
+```
+
+### 2️⃣ Push to Docker Hub
+```sh
+docker login
+docker tag anshchauhanx/llm-automation-agent anshchauhanx/llm-automation-agent:latest
+docker push anshchauhanx/llm-automation-agent:latest
+```
+
+### 3️⃣ Run the Image with Podman
+```sh
+podman run -e AIPROXY_TOKEN=$AIPROXY_TOKEN -p 8000:8000 docker.io/anshchauhanx/llm-automation-agent:latest
+```
+✅ **API will be available at:** `http://localhost:8000`
+
+---
+
+## 📜 License
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
+
+---
+
+🚀 **Happy Coding!** 🎉
